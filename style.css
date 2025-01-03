@@ -1,0 +1,27 @@
+body{
+
+}
+
+.maincon{
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+.maidcon{
+    display: flex;
+    row-gap: 20px;
+    width: 800px;
+    padding: 50px;
+    border-radius: 8px;
+    border: 1px solid #D9D9D9;
+   
+
+}
+.subcon{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+

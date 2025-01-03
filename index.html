@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <label for="usercity">
+        <input type="text"id="usercity">
+    </label>
+    <label for="country">
+        <input type="text"id="usercountry">
+    </label>
+ <button onclick="submit()">check</button>
+
+ <div class="maincon">
+   
+        <div class="midcon">
+            <div class="midcon"><p class="TIMINGtEXT">Date:<span id="date"></span></div>
+    <div class="subcon">
+        <div class="timing card"><p class="TIMINGtEXT">FAJAR:<span id="fajr"></span></p></div>
+
+        <div class="timing card"><p class="TIMINGtEXT">ZUHAR:<span id="zuhar"></span></p></div>
+
+        <div class="timing card"><p class="TIMINGtEXT">ASAR:<span id="Asr"></span></p></div>
+
+        <div class="timing card"><p class="TIMINGtEXT">MAGRIB:<span id="magrib"></span></p></div>
+
+        <div class="timing card"><p class="TIMINGtEXT">ISHA:<span id="ISHA"></span></p></div>
+
+        <div class="timing card"><p class="TIMINGtEXT">SUNRISE:<span id="sunrise"></span></p></div>
+
+
+    
+    </div>
+    </div>
+ </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+        function ChangeTiming(value){
+            let SplittedTime= value.split(":");
+            if (SplittedTime [0] >12){
+
+                let ChangeHour= SplittedTime[0] - 12;
+                return `${ChangeHour}:${SplittedTime[1]}PM`
+            }else if(SplittedTime[0] ==12){
+                return `${value}PM`
+            }else{
+                return`${value}AM`
+            }
+
+
+
+            
+        }
+
+
+    function submit(){
+        let city = document.getElementById("usercity").value;
+        let country = document.getElementById("usercountry").value;
+
+        axios.get(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=1`)
+        .then (function(response){
+            let timing = response.data.data
+            console.log("timing:",timing)
+            
+            document.querySelector("#fajr").innerText=ChangeTiming (timing.timings.Fajr);
+
+            document.querySelector("#zuhar").innerText=ChangeTiming(timing.timings.Dhuhr);
+
+            document.querySelector("#Asr").innerText=ChangeTiming(timing.timings.Asr);
+
+            document.querySelector("#magrib").innerText=ChangeTiming(timing.timings.Maghrib);
+
+            document.querySelector("#ISHA").innerText=ChangeTiming(timing.timings.Isha);
+
+            document.querySelector("#sunrise").innerText=ChangeTiming(timing.timings.Sunrise);
+
+            document.querySelector("#date").innerText=ChangeTiming(timing.date.readable);
+
+
+
+
+
+            
+
+        })
+           
+         .catch((err) => {
+                console.log(err);
+            })
+    }
+  </script>  
+</body>
+</html>
